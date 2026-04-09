@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://c3d8tafxpetrq"]
+
+[ext_resource type="Texture2D" uid="uid://df1qyqas15lum" path="res://addons/kenney_prototype_textures/orange/texture_10.png" id="1_kdtfi"]
+[ext_resource type="Script" uid="uid://5jxa28qeavag" path="res://player.gd" id="1_ow23n"]
+[ext_resource type="PackedScene" uid="uid://dbv0bf25unbt1" path="res://cleanoot_3dlink.tscn" id="2_7vjtm"]
+[ext_resource type="Script" uid="uid://b2teitavx83mv" path="res://camrig.gd" id="3_ow23n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sm4gp"]
+albedo_texture = ExtResource("1_kdtfi")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_c6md4"]
+material = SubResource("StandardMaterial3D_sm4gp")
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mfyh1"]
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7vjtm"]
+radius = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfyh1"]
+albedo_color = Color(0.33954656, 0.6133197, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ow23n"]
+material = SubResource("StandardMaterial3D_mfyh1")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kdtfi"]
+
+[node name="testworld" type="Node3D" unique_id=464828852]
+
+[node name="floor" type="StaticBody3D" parent="." unique_id=517619871]
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor" unique_id=2140295864]
+mesh = SubResource("BoxMesh_c6md4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor" unique_id=205072698]
+shape = SubResource("BoxShape3D_mfyh1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=71421487]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10.26149, 0)
+
+[node name="player" type="CharacterBody3D" parent="." unique_id=2099832711]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1854253, 0)
+script = ExtResource("1_ow23n")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player" unique_id=471243785]
+shape = SubResource("CapsuleShape3D_7vjtm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player" unique_id=1742596975]
+visible = false
+mesh = SubResource("CapsuleMesh_ow23n")
+
+[node name="cleanoot3dlink" parent="player" unique_id=1697280080 instance=ExtResource("2_7vjtm")]
+transform = Transform3D(-0.03, 0, -2.6226832e-09, 0, 0.03, 0, 2.6226832e-09, 0, -0.03, 0, -0.9380102, 0)
+
+[node name="CamRig" type="SpringArm3D" parent="player" unique_id=910949025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+top_level = true
+shape = SubResource("SphereShape3D_kdtfi")
+spring_length = 2.6
+script = ExtResource("3_ow23n")
+
+[node name="Camera3D" type="Camera3D" parent="player/CamRig" unique_id=1514906055]
+transform = Transform3D(0.99999964, -0.00081291806, -0.00031078677, 0.0008699171, 0.9230434, 0.3846949, -2.5855785e-05, -0.38469502, 0.9230437, 0, 0, 3)
