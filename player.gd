@@ -34,3 +34,7 @@ func turn_to(direction: Vector3) -> void:
 		var yaw = atan2(-direction.x, -direction.z)
 		yaw = lerp_angle(rotation.y, yaw, 0.1)
 		rotation.y = yaw
+		
+func _ready() -> void:
+	# Try to fix weird camera jitter
+	$CamRig.add_excluded_object(self)
